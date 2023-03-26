@@ -47,8 +47,9 @@ int App::Run(int argc, char **argv) {
     return 0;
 }
 
-const int App::directorsInfoCheck(std::string nbasname, std::string director,
-                                  std::unique_ptr<directorInfo> const &dirInfo) {
+const int App::directorsInfoCheck(
+    std::string nbasname, std::string director,
+    std::unique_ptr<directorInfo> const &dirInfo) {
     std::ifstream imdbnbas;
     imdbnbas.open(nbasname);
     if (!imdbnbas.is_open()) {
