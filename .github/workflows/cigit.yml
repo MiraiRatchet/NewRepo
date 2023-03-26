@@ -67,6 +67,16 @@ jobs:
       - name: Run cpplint
         run: cpplint --recursive --filter=-build/include_subdir --filter=-runtime/int --root=./ ./src ./App/src ./App/include ./tests
 
+build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: |
+          cmake -B build
+          cmake --build build
+      - name: Run tests
+        run: ctest --output-on-failure --repeat-until-fail 100 --test-dir ./build/tests           
 
 # Команды с флагами, которые я юзал:
 #   clang-tidy --config-file=./configs/.clang-tidy ./src/*.cpp -- -I./googletest/include -I./include
