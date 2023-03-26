@@ -10,7 +10,6 @@
 #include <map>
 #include <memory>
 
-
 struct directorInfo {
     std::string idDirector;
     std::string nameDirector;
