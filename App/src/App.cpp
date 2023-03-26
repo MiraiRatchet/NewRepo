@@ -168,7 +168,7 @@ int App::checkRussianRegion(std::string takasname,
 
 int App::parseCmd(std::map<std::string, std::string> *arguments, int argc,
                   char **argv) {
-    auto args = std::span(argv, size_t(argc));
+    auto args = std::span(argv, static_cast<size_t>(argc));
     std::string prefix = "";
     std::string value = "";
     for (int i = 1; i < argc; i++) {
@@ -184,7 +184,7 @@ int App::parseCmd(std::map<std::string, std::string> *arguments, int argc,
             return 1;
         }
     }
-    int i = (*arguments)["-dir"].find("_");
+    auto i = (*arguments)["-dir"].find("_");
     while (i != std::string::npos) {
         (*arguments)["-dir"].replace(i, 1, " ");
         i = (*arguments)["-dir"].find("_");
