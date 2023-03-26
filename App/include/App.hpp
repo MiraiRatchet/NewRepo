@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <map>
 #include <memory>
+#include <span>
 
 struct directorInfo {
     std::string idDirector;
