@@ -26,7 +26,7 @@ class App {
                               std::unique_ptr<directorInfo> const &df);
     static int checkRussianRegion(std::string takasname,
                                   std::unique_ptr<directorInfo> const &df);
-    static int parseCmd(std::map<std::string, std::string> &arguments, int argc,
+    static int parseCmd(std::map<std::string, std::string> *arguments, int argc,
                         char **argv);
     static int Run(int argc, char **argv);
 };

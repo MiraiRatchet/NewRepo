@@ -12,7 +12,7 @@ int App::Run(int argc, char **argv) {
                                                     {"-tbasics", ""},
                                                     {"-takas", ""},
                                                     {"-dir", ""}};
-    if (parseCmd(arguments, argc, argv)) {
+    if (parseCmd(&arguments, argc, argv)) {
         return 1;
     }
     std::unique_ptr<directorInfo> dirInfo = std::make_unique<directorInfo>();
@@ -166,16 +166,16 @@ int App::checkRussianRegion(std::string takasname,
     return 0;
 }
 
-int App::parseCmd(std::map<std::string, std::string> &arguments, int argc,
+int App::parseCmd(std::map<std::string, std::string> *arguments, int argc,
                   char **argv) {
     std::string prefix = "";
     std::string value = "";
     for (int i = 1; i < argc; i++) {
         std::stringstream arg(argv[i]);
         getline(arg, prefix, '=');
-        if (auto search = arguments.find(prefix); search != arguments.end()) {
+        if (auto search = arguments->find(prefix); search != arguments->end()) {
             getline(arg, value);
-            arguments[prefix] = value;
+            (*arguments)[prefix] = value;
         } else {
             std::cout << "Wrong input "
                          "arguments"
@@ -183,10 +183,10 @@ int App::parseCmd(std::map<std::string, std::string> &arguments, int argc,
             return 1;
         }
     }
-    int i = arguments["-dir"].find("_");
+    int i = (*arguments)["-dir"].find("_");
     while (i != std::string::npos) {
-        arguments["-dir"].replace(i, 1, " ");
-        i = arguments["-dir"].find("_");
+        (*arguments)["-dir"].replace(i, 1, " ");
+        i = (*arguments)["-dir"].find("_");
     }
     return 0;
 }
