@@ -36,7 +36,7 @@ jobs:
           sudo apt-get install -y clang-format
 
       - name: Run clang-format
-        run: clang-format --dry-run --Werror -style=file:./config/.clang-format ./src/*.cpp ./App/include/*.hpp ./App/src/*.cpp -- -I./include
+        run: clang-format --dry-run --Werror -style=file:./config/.clang-format ./src/*.cpp ./App/include/*.hpp ./App/src/*.cpp
 
   clang-tidy:
     runs-on: ubuntu-latest
@@ -48,7 +48,7 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install -y clang-tidy
-          
+
       - name: Build
         run: |
           cmake -B build
