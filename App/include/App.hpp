@@ -1,5 +1,6 @@
 // Copyright(c) 2023 Klimova Mary
 #pragma once
+#include <span>
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -8,7 +9,7 @@
 #include <algorithm>
 #include <map>
 #include <memory>
-#include <span>
+
 
 struct directorInfo {
     std::string idDirector;
