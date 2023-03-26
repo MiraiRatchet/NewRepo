@@ -48,7 +48,7 @@ int App::Run(int argc, char **argv) {
 }
 
 const int App::directorsInfoCheck(std::string nbasname, std::string director,
-                                  std::unique_ptr<directorInfo> &dirInfo) {
+                                  std::unique_ptr<directorInfo> const &dirInfo) {
     std::ifstream imdbnbas;
     imdbnbas.open(nbasname);
     if (!imdbnbas.is_open()) {
@@ -72,7 +72,7 @@ const int App::directorsInfoCheck(std::string nbasname, std::string director,
 }
 
 int App::checkIfIsDirector(std::string tcrewname,
-                           std::unique_ptr<directorInfo> &dirInfo) {
+                           std::unique_ptr<directorInfo> const &dirInfo) {
     std::ifstream imdbtcrew;
     imdbtcrew.open(tcrewname);
     if (!imdbtcrew.is_open()) {
@@ -94,7 +94,7 @@ int App::checkIfIsDirector(std::string tcrewname,
 }
 
 int App::checkIfIsAdult(std::string tbasname,
-                        std::unique_ptr<directorInfo> &df) {
+                        std::unique_ptr<directorInfo> const &df) {
     std::ifstream imdbtbas;
     imdbtbas.open(tbasname);
     if (!imdbtbas.is_open()) {
@@ -129,7 +129,7 @@ int App::checkIfIsAdult(std::string tbasname,
 }
 
 int App::checkRussianRegion(std::string takasname,
-                            std::unique_ptr<directorInfo> &df) {
+                            std::unique_ptr<directorInfo> const &df) {
     std::ifstream imdbtakas;
     imdbtakas.open(takasname);
     if (!imdbtakas.is_open()) {
