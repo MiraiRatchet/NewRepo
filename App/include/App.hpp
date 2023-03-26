@@ -17,9 +17,9 @@ struct directorInfo {
 
 class App {
  public:
-    static const int directorsInfoCheck(std::string nbasname,
-                                        std::string director,
-                                        std::unique_ptr<directorInfo> const &dirInfo);
+    static const int directorsInfoCheck(
+        std::string nbasname, std::string director,
+        std::unique_ptr<directorInfo> const &dirInfo);
     static int checkIfIsDirector(std::string tcrewname,
                                  std::unique_ptr<directorInfo> const &dirInfo);
     static int checkIfIsAdult(std::string tbasname,
