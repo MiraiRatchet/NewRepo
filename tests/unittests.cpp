@@ -1,3 +1,4 @@
+// Copyright(c) 2023 Klimova Mary
 #include <gtest/gtest.h>
 #include "App.hpp"
 
