@@ -79,7 +79,7 @@ jobs:
 
       - name: Install cpplint
         run: |
-          sudo apt-get update -ys
+          sudo apt-get update -y
           sudo apt-get install -y cpplint
 
       - name: Run cpplint
