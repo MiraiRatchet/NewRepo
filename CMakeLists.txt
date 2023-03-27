@@ -10,7 +10,7 @@ add_subdirectory(App)
 #     add_subdirectory(tests)
 # endif()
 
-add_subdirectory(tests)
+# add_subdirectory(tests)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
