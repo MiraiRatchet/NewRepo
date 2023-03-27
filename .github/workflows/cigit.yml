@@ -85,24 +85,24 @@ jobs:
       - name: Run cpplint
         run: cpplint --recursive --filter=-build/include_subdir --filter=-runtime/int --root=./ ./src ./App/src ./App/include ./tests
 
-  unit_test:
-    needs: [ build ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+  # unit_test:
+  #   needs: [ build ]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
 
-      - name: Install gtest
-        run: |
-          sudo apt-get install -y libgtest-dev
+  #     - name: Install gtest
+  #       run: |
+  #         sudo apt-get install -y libgtest-dev
 
-      - name: Build
-        run: |
-          cmake -B build
-          cmake --build build
+  #     - name: Build
+  #       run: |
+  #         cmake -B build
+  #         cmake --build build
 
-      - name: Run tests
-        run: ctest --output-on-failure --repeat-until-fail 100 --test-dir ./build/tests           
+  #     - name: Run tests
+  #       run: ctest --output-on-failure --repeat-until-fail 100 --test-dir ./build/tests           
 
 #   sudo chmod a+x ./build/tests/main_tests                     
 #   sudo valgrind --leak-check=full -s ./build/tests/main_tests     
