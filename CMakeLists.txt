@@ -5,12 +5,10 @@ project(${ProjectName})
 
 add_subdirectory(App)
 
-# option(TestingEnabled ON)
-# if(${TestingEnabled})
-#     add_subdirectory(tests)
-# endif()
-
-add_subdirectory(tests)
+option(TestingEnabled ON)
+if(${TestingEnabled})
+    add_subdirectory(tests)
+endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
