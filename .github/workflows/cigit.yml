@@ -11,7 +11,6 @@ env:
 jobs:
   cppcheck:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -38,7 +37,25 @@ jobs:
       - name: Run clang-format
         run: clang-format --dry-run --Werror -style=file:./config/.clang-format ./src/*.cpp ./App/include/*.hpp ./App/src/*.cpp
 
+  build:
+    needs: [ cppcheck, clang-format, cpplint ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install clang-tidy
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y cmake
+
+      - name: Build
+        run: |
+          cmake -B build
+          cmake --build build
+
   clang-tidy:
+    needs: [ build ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -49,15 +66,10 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y clang-tidy
 
-      - name: Build
-        run: |
-          cmake -B build
-          cmake --build build
-
       - name: Run clang-tidy
         run: |
           clang-tidy --config-file=./config/.clang-tidy ./src/*.cpp ./App/src/App.cpp ./App/include/App.hpp -p build
-        # clang-tidy --config-file=./config/.clang-tidy ./tests/*.cpp -- -I./googletest/include -I./include
+          clang-tidy --config-file=./config/.clang-tidy ./tests/*.cpp -p build
 
   cpplint:
     runs-on: ubuntu-latest
@@ -69,34 +81,23 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install -y cpplint
+
       - name: Run cpplint
         run: cpplint --recursive --filter=-build/include_subdir --filter=-runtime/int --root=./ ./src ./App/src ./App/include ./tests
 
-  build-and-test:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v3
-        - name: Build
-          run: |
-            cmake -B build
-            cmake --build build
-        # - name: Run tests
-        #   run: ctest --output-on-failure --repeat-until-fail 100 --test-dir ./build/tests           
+  test:
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-# Команды с флагами, которые я юзал:
-#   clang-tidy --config-file=./configs/.clang-tidy ./src/*.cpp -- -I./googletest/include -I./include
-#   clang-tidy --config-file=./configs/.clang-tidy ./tests/*.cpp -- -I./googletest/include -I./include
-# Да нужно по отдельности ибо иначе он не может найти "gtest/gtest.h" в тестах и выкидывает ошибку
+      - name: Install gtest
+        run: |
+          sudo apt-get install -y libgtest-dev
 
+      - name: Run tests
+        run: ctest --output-on-failure --repeat-until-fail 100 --test-dir ./build/tests           
 
-
-#   cpplint --recursive --filter=-build/include_subdir --filter=-runtime/int --root=./ ./src ./include ./tests
-
-#   ctest --output-on-failure --repeat-until-fail 100 --test-dir ./build        После того, как через cmake собрал проект в папку build
-
-#   sudo chmod a+x ./build/tests/main_tests                         Чтобы exe с тестами можно было запустить
-#   sudo valgrind --leak-check=full -s ./build/tests/main_tests     У меня по такому пути в собранном проекте exe с тестами лежит. Не самый лучший способ, но работает.
-
-
-
-# Дока для Github Actions https://docs.github.com/en/actions (мне не очень помогла, но пусть будет)
+#   sudo chmod a+x ./build/tests/main_tests                     
+#   sudo valgrind --leak-check=full -s ./build/tests/main_tests     

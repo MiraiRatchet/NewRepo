@@ -13,13 +13,13 @@ int App::Run(int argc, char **argv) {
                                                     {"-takas", ""},
                                                     {"-dir", ""}};
     if (parseCmd(&arguments, argc, argv)) {
-        return 1;
+        return 2;
     }
     std::unique_ptr<directorInfo> dirInfo = std::make_unique<directorInfo>();
     std::cout << "Searching for the director..." << std::endl;
     if (App::directorsInfoCheck(arguments["-nbasics"], arguments["-dir"],
                                 dirInfo)) {
-        return 1;
+        return 3;
     }
     std::cout << "Director found! Checking titles..." << std::endl;
 
@@ -29,7 +29,7 @@ int App::Run(int argc, char **argv) {
         std::cout << "No known titles for this director "
                      "in IMDB"
                   << std::endl;
-        return 1;
+        return 4;
     }
     std::cout << "This director has " << dirInfo->knownForTitles.size()
               << " titles. Checking..." << std::endl;

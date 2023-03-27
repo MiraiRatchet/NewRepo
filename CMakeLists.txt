@@ -7,5 +7,11 @@ add_subdirectory(App)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# option(TestingEnabled ON)
+# if(${TestingEnabled})
+#     add_subdirectory(tests)
+# endif()
+
+add_subdirectory(tests)
 add_executable(${ProjectName} src/imdbdataanalyze.cpp)
 target_link_libraries(${ProjectName} App)
